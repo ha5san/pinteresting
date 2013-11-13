@@ -2,3 +2,5 @@
 This is the pinteresting application for [*One Month Rails] (www.onemonthrails.com) 
 
 by [Hassan Salahuddin] (www.onemonthrails)
+
+Doing another update to test git
