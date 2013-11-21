@@ -1,0 +1,73 @@
+= mime-types
+
+home :: http://mime-types.rubyforge.org/
+code :: https://github.com/halostatue/mime-types/
+bugs :: https://github.com/halostatue/mime-types/issues
+rdoc :: http://mime-types.rubyforge.org/
+code climate :: {<img src="https://codeclimate.com/github/halostatue/mime-types.png" />}[https://codeclimate.com/github/halostatue/mime-types]
+continuous integration :: {<img src="https://travis-ci.org/halostatue/mime-types.png" />}[https://travis-ci.org/halostatue/mime-types]
+
+== Description
+
+The mime-types library provides a library and registry for information about
+MIME content type definitions. It can be used to determine defined filename
+extensions for MIME types, or to use filename extensions to look up the likely
+MIME type definitions.
+
+MIME content types are used in MIME-compliant communications, as in e-mail or
+HTTP traffic, to indicate the type of content which is transmitted. The
+mime-types library provides the ability for detailed information about MIME
+entities (provided as an enumerable collection of MIME::Type objects) to be
+determined and used programmatically. There are many types defined by RFCs and
+vendors, so the list is long but by definition incomplete; don't hesitate to to
+add additional type definitions (see Contributing.rdoc). The primary sources
+for MIME type definitions found in mime-types is the IANA collection of
+registrations (see below for the link), RFCs, and W3C recommendations.
+
+The mime-types library uses semantic versioning. This is release 2.0; there are
+incompatible changes in the API provided by mime-types, mostly around registry
+initialization (see History.rdoc for full details), and the removal of support
+for Ruby 1.8 interpreters.
+
+mime-types (previously called MIME::Types for Ruby) was originally based on
+MIME::Types for Perl by Mark Overmeer, copyright 2001 - 2009. It is built to
+conform to the MIME types of RFCs 2045 and 2231. It tracks the {IANA
+registry}[http://www.iana.org/assignments/media-types/]
+({ftp}[ftp://ftp.iana.org/assignments/media-types]) with some unofficial types
+added from the {LTSW collection}[http://www.ltsw.se/knbase/internet/mime.htp]
+and added by the users of mime-types.
+
+== Synopsis
+
+MIME types are used in MIME entities, as in email or HTTP traffic. It is useful
+at times to have information available about MIME types (or, inversely, about
+files). A MIME::Type stores the known information about one MIME type.
+
+    require 'mime/types'
+
+    plaintext = MIME::Types['text/plain']
+    # returns [text/plain, text/plain]
+    text      = plaintext.first
+    puts text.media_type            # => 'text'
+    puts text.sub_type              # => 'plain'
+
+    puts text.extensions.join(" ")  # => 'txt asc c cc h hh cpp hpp dat hlp'
+
+    puts text.encoding              # => quoted-printable
+    puts text.binary?               # => false
+    puts text.ascii?                # => true
+    puts text.obsolete?             # => false
+    puts text.registered?           # => true
+    puts text == 'text/plain'       # => true
+    puts MIME::Type.simplified('x-appl/x-zip')
+                                    # => 'appl/zip'
+
+    puts MIME::Types.any? { |type|
+      type.content_type == 'text/plain'
+    }                               # => true
+    puts MIME::Types.all?(&:registered?)
+                                    # => false
+
+:include: Contributing.rdoc
+
+:include: Licence.rdoc
